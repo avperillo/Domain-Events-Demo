@@ -9,7 +9,7 @@ namespace Demo.Domain.Model
     public interface IDomainEventListener { }
 
     public interface IDomainEventListener<T> : IDomainEventListener
-        where T: IDomainEvent
+        where T : IDomainEvent
     {
         void Handle(T @event);
     }

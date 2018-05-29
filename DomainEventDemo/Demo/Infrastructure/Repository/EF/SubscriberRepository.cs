@@ -1,28 +1,26 @@
-﻿using Demo.Domain.Model.Users;
-using Demo.Infrastructure.Data.Users;
+﻿using Demo.Domain.Model.NewsLetters;
+using Demo.Infrastructure.Data;
+using Demo.Infrastructure.Data.NewsLetters;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Repository.EF
 {
-    public class UserRepository : IUserRepository
+    public class SubscriberRepository : ISubscriberRepository
     {
-        private IUserContext context;
+        private ISubscriberContext context;
 
-        public UserRepository(IUserContext context)
+        public SubscriberRepository(ISubscriberContext context)
         {
             this.context = context;
         }
 
-        public User Add(User entity)
+        public Subscriber Add(Subscriber entity)
         {
             try
             {
-                context.Users.Add(entity);
+                context.Subscribers.Add(entity);
                 context.SaveChanges();
                 return GetById(entity.Id);
             }
@@ -32,13 +30,13 @@ namespace Demo.Infrastructure.Repository.EF
             }
         }
 
-        public User GetById(Guid id)
+        public Subscriber GetById(Guid id)
         {
-            User usuario = default(User);
+            Subscriber subscriber = default(Subscriber);
 
             try
             {
-                usuario = (from u in context.Users
+                subscriber = (from u in context.Subscribers
                            where u.Id == id
                            select u).FirstOrDefault();
             }
@@ -47,12 +45,12 @@ namespace Demo.Infrastructure.Repository.EF
                 throw;
             }
 
-            return usuario;
+            return subscriber;
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<Subscriber> GetAll()
         {
-            return context.Users;
+            return context.Subscribers;
         }
 
     }

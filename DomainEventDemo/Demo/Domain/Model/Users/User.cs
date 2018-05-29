@@ -8,10 +8,10 @@ namespace Demo.Domain.Model.Users
 {
     public class User
     {
-        public Guid Id { get; private set; }
-        public string UserName { get; private set; }
-        public string Email { get; private set; }
-        public string Password { get; private set; }
+        public Guid Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
 
         public User(string userName, string email, string password)
         {
@@ -29,6 +29,8 @@ namespace Demo.Domain.Model.Users
             this.Email = email;
             this.Password = password;
         }
-
+        public User()
+        {
+        }
     }
 }

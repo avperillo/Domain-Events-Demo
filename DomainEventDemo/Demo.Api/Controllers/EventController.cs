@@ -1,4 +1,5 @@
-﻿using Demo.Application.Services.Users;
+﻿using Demo.Application;
+using Demo.Application.Services.Users;
 using Demo.Domain.Model.Users;
 using System;
 using System.Collections.Generic;
@@ -9,29 +10,28 @@ using System.Web.Http;
 
 namespace Demo.Api.Controllers
 {
-    public class UserController : ApiController
+    public class EventController : ApiController
     {
-        private IUserServices _userService { get; }
+        private IEventStore _eventStore { get; }
 
-        public UserController(IUserServices userService)
+        public EventController(IEventStore eventStore)
         {
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _eventStore = eventStore ?? throw new ArgumentNullException(nameof(eventStore));
         }
 
         public IHttpActionResult Get()
         {
-            return Json(_userService.GetAll());
+            return Json(_eventStore.GetAllSince(new DateTime(2018,1,1)));
         }
 
-        public IHttpActionResult Get(Guid id)
+        public IHttpActionResult Get(DateTime dateTime)
         {
-            return Json(_userService.GetById(id));
+            return Json(_eventStore.GetAllSince(dateTime));
         }
 
         public IHttpActionResult Post(User value)
         {
-            value = _userService.RegisterNewUser(value);
-            return Json(value);
+            throw new NotImplementedException();
         }
 
         public void Put(int id, [FromBody]string value)

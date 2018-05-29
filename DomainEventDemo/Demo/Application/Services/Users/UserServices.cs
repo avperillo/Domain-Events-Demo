@@ -18,10 +18,29 @@ namespace Demo.Application.Services.Users
             _userRepository = userRepository;
         }
 
+        public IEnumerable<User> GetAll()
+        {
+            return _userRepository.GetAll();
+        }
+
+        public User GetById(Guid id)
+        {
+            var user = _userRepository.GetAll()
+                        .Where(usr => usr.Id == id)
+                        .FirstOrDefault();
+
+            if (user == null)
+                throw new UserNotExistException();
+
+            return user;
+        }
+
         public User RegisterNewUser(User user)
         {
-            if (_userRepository.ListAll().Any(u => u.Id == user.Id))
-                throw new UserAlreadyExistException();
+            if (_userRepository.GetAll().Any(u => u.Email == user.Email))
+                throw new EmailAlreadyExistException();
+
+            user.Id = Guid.NewGuid();
 
             var result = _userRepository.Add(user);
 

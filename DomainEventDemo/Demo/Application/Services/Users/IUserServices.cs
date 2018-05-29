@@ -12,5 +12,7 @@ namespace Demo.Application.Services.Users
 
         User RegisterNewUser(User user);
 
+        IEnumerable<User> GetAll();
+        User GetById(Guid id);
     }
 }
